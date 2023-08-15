@@ -13,8 +13,7 @@ like '%the%';
 -- GROUP BY
 
 select concat(author_fname, ' ', author_lname)
-as author, count(*)
-as books
+as author, count(*) as books
 from books
 group by author
 order by books desc, author; 
