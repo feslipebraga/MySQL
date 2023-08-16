@@ -24,3 +24,20 @@ left join orders o on c.id = o.customer_id;
 select c.first_name, c.last_name, o.order_date, o.amount
 from orders o
 left join customers c on o.customer_id = c.id;
+
+-- Left Join With Group By
+
+select c.first_name, c.last_name, IFNULL(sum(o.amount), 0)
+from customers c
+    left join orders o on c.id = o.customer_id
+group by
+    c.first_name, c.last_name;
+
+-- RIGHT JOIN
+
+select c.first_name, c.last_name, o.order_date, o.amount
+from orders o
+right join customers c on o.customer_id = c.id;
+
+-- On Delete Cascade: Delete tuples where the deleted customer was.
+FOREIGN KEY (customer_id) REFERENCES customers (id) ON DELETE CASCADE
