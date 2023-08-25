@@ -4,16 +4,6 @@ select * from users
 order by createdAt
 limit 5;
 
-+----+------------------+---------------------+
-| id | username         | createdAt           |
-+----+------------------+---------------------+
-| 80 | Darby_Herzog     | 2016-05-06 00:14:21 |
-| 67 | Emilio_Bernier52 | 2016-05-06 13:04:30 |
-| 63 | Elenor88         | 2016-05-08 01:30:41 |
-| 95 | Nicole71         | 2016-05-09 17:30:22 |
-| 38 | Jordyn.Jacobson2 | 2016-05-14 07:56:26 |
-+----+------------------+---------------------+
-
 -- 2. Em que dia da semana a maioria dos usuários se registra?
 
 select
@@ -22,18 +12,6 @@ dayname(createdAt) as dayname,
 count(*) as count from users
 group by day, dayname
 order by count desc;
-
-+------+-----------+-------+
-| day  | dayname   | count |
-+------+-----------+-------+
-|    5 | Thursday  |    16 |
-|    1 | Sunday    |    16 |
-|    6 | Friday    |    15 |
-|    3 | Tuesday   |    14 |
-|    2 | Monday    |    14 |
-|    4 | Wednesday |    13 |
-|    7 | Saturday  |    12 |
-+------+-----------+-------+
 
 -- 3. Encontre os usuários que nunca postaram uma foto.
 
@@ -44,23 +22,30 @@ order by id;
 
 -- 4. Qual usuário tem mais likes em 1 única foto?
 
-select
-    u.username,
-    p.imageUrl,
-    count(l.photoId) as num_likes
-from
-    users u
-join
-    photos p on p.userId = u.id
-join
-    likes l on l.photoId = p.id
-group by u.id, p.id
-order by num_likes desc
+select u.username, l.photoID, count(photoId) as likes
+from likes l
+join photos p on p.id = l.photoId
+join users u on u.id = p.userId
+group by l.photoId
+order by likes desc
 limit 1;
 
-+---------------+---------------------+-----------+
-| username      | imageUrl            | num_likes |
-+---------------+---------------------+-----------+
-| Zack_Kemmer93 | https://jarret.name |        48 |
-+---------------+---------------------+-----------+
+-- 5. Qual a média entre fotos postadas e usuários?
 
+SELECT (SELECT count(*) FROM photos) / (SELECT count(*) FROM users) as avg;
+
+-- 6. Quais são as 5 hashtags mais usadas?
+
+select tagname, tagID, count(tagID) as count from phototags pt
+join tags t on pt.tagID = t.id
+group by tagID
+order by count desc
+limit 5;
+
+-- 7. Encontre os usuários que curtiram TODAS as fotos.
+
+select u.username, l.userID, count(l.userId) as count from likes l
+join users u on u.id = l.userid
+group by l.userID
+having count = (select count(*) from photos)
+order by count desc;
