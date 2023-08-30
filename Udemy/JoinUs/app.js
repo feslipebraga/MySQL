@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/joke', (req, res) => {
-    res.send('What do you call a dog that does trick magics? A labracadabrador.');
+    res.send('<strong>Por que o programador saiu de casa?</strong> <em>Porque ele perdeu a conexão com a realidade!</em>');
 });
 
 app.get('/random_number', (req, res) => {
