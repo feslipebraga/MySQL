@@ -1,6 +1,7 @@
 // IMPORTANDO O PACOTE "FAKER"
 const {faker} = require('@faker-js/faker');
 
+
 // CONECTANDO AO BD
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -11,7 +12,31 @@ var connection = mysql.createConnection({
     connectionLimit: 10
 });
 
-// INSERINDO DADOS ALEATORIOS NA TABELA
+connection.connect(function(err){
+    if (err){
+        console.log('Erro ao conectar-se: ' + err.stack);
+        return;
+    }
+    console.log('Conexão bem sucedida. ID: ' + connection.threadId);
+});
+
+
+// CRIANDO DADOS ALEATORIOS DENTRO DE UM ARRAY
+var data = []
+for (var i = 0; i < 10; i++){
+    data.push([
+        faker.internet.email(),
+        faker.date.past()
+    ])
+};
+
+// ADICIONADO OS DADOS DO ARRAY, DENTRO DAS TABELAS DO BD
+var insert = 'INSERT INTO users VALUES ?'
+connection.query(insert, [data], function(err, res){
+    console.log(err);
+    console.log(res);
+});
+
 /* for (x = 0; x < 10; x++){
     var person = {
         email: faker.internet.email(),
@@ -21,20 +46,6 @@ var connection = mysql.createConnection({
         if(err) throw error;
     });
 } */
-
-// OU
-var data = []
-for (var i = 0; i < 10; i++){
-    data.push([
-        faker.internet.email(),
-        faker.date.past()
-    ])
-};
-
-connection.query('INSERT INTO users VALUES ?', [data], function(err, results){
-    console.log(err);
-    console.log(results);
-});
 
 // MOSTRE TODOS OS DADOS DA TABELA USERS
 var q = 'SELECT email FROM users';
