@@ -1,7 +1,13 @@
-<h1>JOIN US</h1>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+<link rel="stylesheet" href="/app.css">
 
-<p class="lead">Insira seu endereço de e-mail e junte-se aos <b><%= count %></b> outros presentes em nossa lista de espera.</p>
-<form action="/register" method="post">
-    <input type="text" class="form" name="email" placeholder="Insira seu e-mail">
-    <button>Junte-se</button>
-</form>
+<div class="flex-container">
+    <div class="container">
+        <h1>JOIN US</h1>
+        <p class="lead">Insira seu endereço de e-mail e junte-se aos <b><%= count %></b> outros presentes em nossa lista de espera.</p>
+        <form method="post" action="/register">
+            <input type="text" class="form" name="email" placeholder="Insira seu e-mail">
+            <button>Junte-se</button>
+        </form>
+    </div>
+</div>
