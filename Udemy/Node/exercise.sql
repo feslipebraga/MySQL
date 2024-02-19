@@ -1,16 +1,16 @@
 -- Encontre a data mais antiga em que um usuário se juntou.
 
-SELECT DATE_FORMAT(MIN(createdAt), "%M %D %Y") as 'earliest date'
+SELECT DATE_FORMAT(MIN(created_at), "%M %D %Y") as 'earliest date'
 FROM users;
 
 -- encontrar o e-mail do primeiro usuário.
 
 SELECT * FROM users
-WHERE createdAt = (SELECT MIN(createdAt) FROM users);
+WHERE created_at = (SELECT MIN(created_at) FROM users);
 
 -- Quantidade de usuários cadastros por cada mês.
 
-SELECT MONTHNAME(createdAt) as month, COUNT(*) as count FROM USERS
+SELECT MONTHNAME(created_at) as month, COUNT(*) as count FROM USERS
 GROUP BY month
 order by count desc;
 

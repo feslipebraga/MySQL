@@ -3,13 +3,16 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+app.set("view engine", "ejs");
+
+// ACESSE http://localhost:3000/ no navegador para acessar
 
 // conectando com o BD
-var mysql = require('mysql')
+var mysql = require('mysql2')
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root123',
+    password: 'admin123',
     database: 'join_us'
 });
 connection.connect(function(err){
@@ -28,7 +31,8 @@ app.get('/', (req, res) => {
     connection.query(q, function(err, results){
         if (err) throw err;
         var count = results[0].count;
-        res.send('No total, há ' + count + ' usuários cadastrados no banco de dados.');
+        // res.send('No total, há ' + count + ' usuários cadastrados no banco de dados.');
+        res.render("home", { count: count }); // Passando count como variável para o modelo
     });
 });
 

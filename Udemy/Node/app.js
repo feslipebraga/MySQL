@@ -3,11 +3,11 @@ const {faker} = require('@faker-js/faker');
 
 
 // CONECTANDO AO BD
-var mysql = require('mysql');
+var mysql = require('mysql2');
 var connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root123",
+    password: "admin123",
     database: "join_us",
     connectionLimit: 10
 });
