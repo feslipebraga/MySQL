@@ -55,3 +55,12 @@ CREATE TABLE follows(
     foreign key (followedId) references users(id), 
     primary key (followerId, followedId)
 );
+
+CREATE TABLE unfollows(
+    followerId int not null,
+    followedId int not null,
+    createdAt timestamp default now(),
+    foreign key (followerId) references users(id), 
+    foreign key (followedId) references users(id), 
+    primary key (followerId, followedId)
+);
